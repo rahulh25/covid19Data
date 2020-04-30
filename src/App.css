@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-item {
+  display: inline;
+  margin-left: 2rem;
+  color:white;
+}
+.nav-item:hover {
+  cursor: pointer;
+}
+.table:hover{
+  cursor: pointer;
+}
+.table > thead{
+  color:black;
+  font-size:1.1em
+}
