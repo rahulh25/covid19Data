@@ -2,10 +2,7 @@ import React from 'react'
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css'
 import BootstrapTable from 'react-bootstrap-table-next'
-import filterFactory, {
-  textFilter,
-  numberFilter
-} from 'react-bootstrap-table2-filter'
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter'
 import { Card, Row, Col } from 'react-bootstrap'
 
 const CountryData = props => {
@@ -20,35 +17,30 @@ const CountryData = props => {
       dataField: 'cases',
       text: 'Total Cases',
       sort: true,
-      filter: numberFilter(),
       classes: 'text-danger'
     },
     {
       dataField: 'deaths',
       text: 'Total Deaths',
       sort: true,
-      filter: numberFilter(),
       classes: 'text-danger'
     },
     {
       dataField: 'recovered',
       text: 'Total Recovered',
       sort: true,
-      filter: numberFilter(),
       classes: 'text-success'
     },
     {
       dataField: 'todayCases',
       text: 'New Cases',
       sort: true,
-      filter: numberFilter(),
       classes: 'text-info'
     },
     {
       dataField: 'todayDeaths',
       text: 'New Deaths',
       sort: true,
-      filter: numberFilter(),
       classes: 'text-info'
     }
   ]
