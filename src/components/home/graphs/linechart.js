@@ -24,7 +24,7 @@ const ChartData = props => {
   })
   return (
     <Col>
-      <h5 className='AlignTextCenter'>Top 15 worst effected countries</h5>
+      <h5 className='AlignTextCenter'>Top 15 worst effected countries (by number of cases)</h5>
       <br></br>
       <Row>
         <LineChart

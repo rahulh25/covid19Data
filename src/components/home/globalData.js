@@ -5,6 +5,8 @@ import CountryData from './countryData'
 import ChartData from './graphs/linechart'
 import HomepageAlert from '../common/homepageAlert'
 import LeafletMap from './map/leafletMap'
+import AreaChartData from './graphs/areaChart'
+import BarChartData from './graphs/barChart'
 
 class GlobalData extends React.Component {
   constructor () {
@@ -120,6 +122,8 @@ class GlobalData extends React.Component {
         <div id='graphData'>
           <h2 className='AlignTextCenter cardbackgroundcolor'>Graphs</h2>
           <ChartData props={this.state.CountryData} />
+          <AreaChartData props={this.state.CountryData} />
+          <BarChartData props={this.state.CountryData} />
         </div>
         <hr></hr>
         <div id='mapData'>
