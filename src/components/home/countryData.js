@@ -5,6 +5,7 @@ import BootstrapTable from 'react-bootstrap-table-next'
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter'
 import { Card, Row, Col } from 'react-bootstrap'
 
+
 const CountryData = props => {
   const columns = [
     {
@@ -77,7 +78,7 @@ const CountryData = props => {
             <Col>
               <label htmlFor='totaltest'>Total Tests</label>
               <p id='totaltest' className='text-info'>
-                {row.totalTests}
+                {row.tests}
               </p>
             </Col>
             <Col>
@@ -94,7 +95,7 @@ const CountryData = props => {
   }
   return (
     <BootstrapTable
-      data={props.props.slice(1)}
+      data={props.props}
       columns={columns}
       keyField='country'
       filter={filterFactory()}

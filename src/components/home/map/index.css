@@ -1,0 +1,79 @@
+.icon-marker {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: white;
+  width: 3.6em;
+  height: 3.6em;
+  font-size: .7em;
+  font-weight: bold;
+  background-color: #c62828;
+  border-radius: 100%;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+}
+
+.icon-marker:hover .icon-marker-tooltip {
+  display: block;
+}
+
+.icon-marker-tooltip {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  width: 16em;
+  font-size: 1.4em;
+  padding: 1em;
+  background-color: #263238;
+  border-radius: .4em;
+  margin-bottom: 1em;
+  -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.9);
+          box-shadow: 0 3px 5px rgba(0, 0, 0, 0.9);
+}
+
+.icon-marker-tooltip:before {
+  display: block;
+  position: absolute;
+  bottom: -.6em;
+  left: 50%;
+  content: '';
+  width: 1.4em;
+  height: 1.4em;
+  background-color: #263238;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  margin-left: -.7em;
+}
+
+.icon-marker-tooltip h2 {
+  font-size: 1.5em;
+  line-height: 1.2;
+  margin-bottom: .1em;
+  margin-top: 0;
+}
+
+.icon-marker-tooltip h3 {
+  font-size: 1.2em;
+  margin: .1em 0;
+  font-weight: normal;
+  color: #cfd8dc;
+}
+
+.icon-marker-tooltip ul,
+.icon-marker-tooltip p {
+  font-weight: normal;
+}
+
+.icon-marker-tooltip ul {
+  list-style: none;
+  padding: 0;
+  margin: .6em 0 0;
+}
+/*# sourceMappingURL=index.css.map */

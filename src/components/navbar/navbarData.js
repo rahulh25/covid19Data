@@ -49,6 +49,18 @@ class NavBarData extends React.Component {
                 Graphs
               </Link>
             </div>
+            <div className='nav-item'>
+              <Link
+                activeClass='active'
+                to='mapData'
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+              >
+                Map
+              </Link>
+            </div>
           </Nav>
         </Navbar.Collapse>
         <button onClick={scrollToTop} className='btn btn-link'>To the top!</button>

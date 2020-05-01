@@ -36,3 +36,12 @@ code {
   width: auto;
   text-align:left
 }
+.leaflet-container {
+  height: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+.leaflet-overlay-pane path,
+.leaflet-marker-icon {
+  cursor: pointer;
+}
