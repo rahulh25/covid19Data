@@ -53,3 +53,7 @@
   font-size:1.1em
 }
 #mapid { height: 180px; }
+#basic-nav-dropdown{
+  display: inline;
+  color:white;
+}

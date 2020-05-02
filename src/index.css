@@ -13,7 +13,8 @@ code {
 }
 
 .AlignTextCenter{
-  text-align:center
+  text-align:center;
+  color: #333333
 }
 .increaseTextSize{
   font-size:2em
@@ -31,6 +32,7 @@ code {
 .AlignTextLeft{
   text-align:left;
   font-weight: bold;
+  color:#333333 
 }
 .table{
   width: auto;
@@ -43,5 +45,12 @@ code {
 }
 .leaflet-overlay-pane path,
 .leaflet-marker-icon {
+  cursor: pointer;
+}
+path {
+  pointer-events: all;
+}
+path:hover {
+  opacity: 0.50;
   cursor: pointer;
 }

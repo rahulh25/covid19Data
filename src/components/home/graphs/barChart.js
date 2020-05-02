@@ -12,7 +12,7 @@ import { Row, Col } from 'react-bootstrap'
 
 const BarChartData = props => {
   var data = []
-  props.props.slice(0, 15).map(d => {
+  props.props.map(d => {
     data.push({
       country: d.country,
       tests: d.tests,
