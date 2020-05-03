@@ -1,14 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { Container, Row, Card } from 'react-bootstrap'
-import CountryData from './countryData'
-import ChartData from './graphs/linechart'
 import HomepageAlert from '../common/homepageAlert'
-import LeafletMap from './map/leafletMap'
-import AreaChartData from './graphs/areaChart'
-import BarChartData from './graphs/barChart'
-import USAmapData from './map/usmapData'
-import USACountyData from './map/usaCountyWiseData'
+import LeafletMap from './map/globalmaps/leafletMap'
 
 class GlobalData extends React.Component {
   constructor () {
@@ -33,12 +27,9 @@ class GlobalData extends React.Component {
       dangerVariant: 'danger',
       successVariant: 'success',
       infoVariant: 'info',
-      warningVariant: 'warning',
-      graphData: [],
-      usaData: []
+      warningVariant: 'warning'
     }
   }
-
   componentDidMount () {
     axios
       .get('https://coronavirus-19-api.herokuapp.com/countries')
@@ -59,17 +50,9 @@ class GlobalData extends React.Component {
             return 0
           })
           this.setState({
-            CountryData: response.data,
-            graphData: response.data.slice(0, 15)
+            CountryData: response.data
           })
         })
-      })
-    axios
-      .get(
-        'https://api.apify.com/v2/key-value-stores/moxA3Q0aZh5LosewB/records/LATEST?disableRedirect=true'
-      )
-      .then(response => {
-        this.setState({ usaData: response.data.casesByState })
       })
   }
   render () {
@@ -122,39 +105,9 @@ class GlobalData extends React.Component {
           </Card>
         </Container>
         <hr></hr>
-        <div style={{ width: '100%' }} id='countryData'>
-          <h2 className='AlignTextCenter cardbackgroundcolor'>
-            COUNTRYWISE DATA
-          </h2>
-          <p className='AlignTextLeft'>
-            Click on a row to see more data
-          </p>
-          <CountryData props={this.state.CountryData} />
-        </div>
-        <hr></hr>
-        <div id='graphData'>
-          <h2 className='AlignTextCenter cardbackgroundcolor'>Graphs</h2>
-          <ChartData props={this.state.graphData} />
-          <AreaChartData props={this.state.graphData} />
-          <BarChartData props={this.state.graphData} />
-        </div>
-        <hr></hr>
-        <h2 className='AlignTextCenter cardbackgroundcolor'>World Map</h2>
+        <h2 className='AlignTextCenter'>World Map</h2>
         <div id='mapData'>
           <LeafletMap props={this.state.CountryData} />
-        </div>
-        <hr></hr>
-        <h2 className='AlignTextCenter cardbackgroundcolor'>USA</h2>
-        <p className='AlignTextLeft'>
-          Click on a state to see total cases
-        </p>
-        <div id='usmapData'>
-          <USAmapData />
-        </div>
-        <hr></hr>
-        <h2 className='AlignTextCenter cardbackgroundcolor'>USA Counties</h2>
-        <div id='usCountyData'>
-          <USACountyData />
         </div>
       </div>
     )

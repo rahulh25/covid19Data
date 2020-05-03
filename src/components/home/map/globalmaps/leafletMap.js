@@ -1,7 +1,7 @@
 import React from 'react'
 import L from 'leaflet'
-import './index.css'
-import Map from './Map';
+import '../index.css'
+import Map from '../Map';
 
 const LeafletMap = props => {
   const LOCATION = {
@@ -16,7 +16,6 @@ const LeafletMap = props => {
     zoom: DEFAULT_ZOOM,
     mapEffect
   }
-  //const position = [0, 0]
   const hasCountries = Array.isArray(props.props) && props.props.length > 0
   async function mapEffect ({ leafletElement: map } = {}) {
     if (!hasCountries || !map) return

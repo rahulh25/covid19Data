@@ -4,10 +4,26 @@ import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 import BootstrapTable from 'react-bootstrap-table-next'
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter'
 import { Card, Row, Col } from 'react-bootstrap'
+import axios from 'axios'
 
-
-const CountryData = props => {
-  const columns = [
+class CountryData extends React.Component {
+  constructor () {
+    super()
+    this.state = { countryData: [] }
+  }
+  componentDidMount () {
+    axios.get('https://corona.lmao.ninja/v2/countries').then(response => {
+      response.data.sort((r1, r2) => {
+        if (r1.cases > r2.cases) return -1
+        if (r1.votes < r2.votes) return 1
+        return 0
+      })
+      this.setState({
+        countryData: response.data
+      })
+    })
+  }
+  columns = [
     {
       dataField: 'country',
       text: 'Country',
@@ -45,7 +61,7 @@ const CountryData = props => {
       classes: 'text-info'
     }
   ]
-  const expandRow = {
+  expandRow = {
     renderer: row => (
       <Card>
         <h4 className='AlignTextCenter'>{row.country.toUpperCase()}</h4>
@@ -93,17 +109,25 @@ const CountryData = props => {
     ),
     nonExpandable: [1]
   }
-  return (
-    <BootstrapTable
-      data={props.props}
-      columns={columns}
-      keyField='country'
-      filter={filterFactory()}
-      filterPosition='top'
-      classes='textsizefortable'
-      hover={true}
-      expandRow={expandRow}
-    />
-  )
+  render () {
+    return (
+      <div>
+        <h2 className='AlignTextCenter'>
+          COUNTRYWISE DATA
+        </h2>
+        <p className='AlignTextLeft'>Click on a row to see more data</p>
+        <BootstrapTable
+          data={this.state.countryData}
+          columns={this.columns}
+          keyField='country'
+          filter={filterFactory()}
+          filterPosition='top'
+          classes='textsizefortable'
+          hover={true}
+          expandRow={this.expandRow}
+        />
+      </div>
+    )
+  }
 }
 export default CountryData

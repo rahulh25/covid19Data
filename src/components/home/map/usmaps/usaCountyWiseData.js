@@ -1,7 +1,7 @@
 import React from 'react'
 import USA from '@svg-maps/usa.counties'
 import { RadioSVGMap } from 'react-svg-map'
-import './index.css'
+import '../index.css'
 import * as d3 from 'd3'
 import { Popover, Overlay } from 'react-bootstrap'
 
@@ -13,7 +13,8 @@ class USACountyData extends React.Component {
       showPopup: false,
       currentcases: 0,
       currentCounty: '',
-      setTarget: ''
+      setTarget: '',
+      dateofdata: ''
     }
   }
   componentDidMount () {
@@ -29,6 +30,15 @@ class USACountyData extends React.Component {
         .getFullYear()
         .toString()
         .substr(-2)
+    this.setState({
+      dateofdata:
+        today.getMonth() +
+        1 +
+        '/' +
+        today.getDate() +
+        '/' +
+        today.getFullYear().toString()
+    })
     d3.csv(
       'https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_confirmed_usafacts.csv'
     ).then(data => {
@@ -91,7 +101,7 @@ class USACountyData extends React.Component {
             <Popover id='popover-basic'>
               <Popover.Title as='h3'>{this.state.currentCounty}</Popover.Title>
               <Popover.Content>
-                Total Cases: {this.state.currentcases}
+                Total Cases: &nbsp; {this.state.currentcases}
               </Popover.Content>
             </Popover>
           </Overlay>
@@ -100,6 +110,13 @@ class USACountyData extends React.Component {
     }
     return (
       <div>
+        <h2 className='AlignTextCenter' style={{ marginTop: '5px' }}>
+          USA County
+        </h2>
+        <p className='AlignTextLeft'>Hover over a county to see total cases</p>
+        <p className='AlignTextLeftwithoutBold'>
+          Data as of : &nbsp;{this.state.dateofdata}
+        </p>
         {showPopup}
         <RadioSVGMap
           map={USA}

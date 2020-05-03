@@ -1,8 +1,8 @@
 import React from 'react'
 import USAMap from 'react-usa-map'
 import * as d3 from 'd3'
-import { Popover, Card, Overlay, Row } from 'react-bootstrap'
-class USAmapData extends React.Component {
+import { Popover, Card, Overlay, Row, Col } from 'react-bootstrap'
+export default class USAmapData extends React.Component {
   constructor () {
     super()
     this.state = {
@@ -11,11 +11,13 @@ class USAmapData extends React.Component {
       currentcases: 0,
       currentState: '',
       setTarget: '',
-      currentStateCode: ''
+      currentStateCode: '',
+      dateofdata: ''
     }
   }
   mapHandler = event => {
-    //event.preventDefault()
+    event.preventDefault()
+    return event
   }
   componentDidMount () {
     var mapData = []
@@ -31,6 +33,17 @@ class USAmapData extends React.Component {
         .getFullYear()
         .toString()
         .substr(-2)
+    this.setState({
+      dateofdata:
+        today.getMonth() +
+        1 +
+        '/' +
+        today.getDate() +
+        '/' +
+        today
+          .getFullYear()
+          .toString()
+    })
     d3.csv(
       'https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_confirmed_usafacts.csv'
     ).then(data => {
@@ -47,6 +60,7 @@ class USAmapData extends React.Component {
         .entries(data)
       finalData.forEach(data => {
         mapData.push(data)
+        return data
       })
       this.setState({ finalMapData: mapData })
     })
@@ -79,6 +93,7 @@ class USAmapData extends React.Component {
             if (entry['key'].toString() === event.target.dataset.name) {
               result = entry['value']
             }
+            return entry
           })
           this.setState({
             showPopup: !this.state.showPopup,
@@ -89,6 +104,7 @@ class USAmapData extends React.Component {
           })
         }
       }
+      return element
     })
     return mySet
   }
@@ -101,13 +117,13 @@ class USAmapData extends React.Component {
           <Overlay
             show={this.state.showPopup}
             target={this.state.setTarget}
-            placement='bottom'
+            placement='top'
             containerPadding={20}
           >
             <Popover id='popover-basic'>
               <Popover.Title as='h3'>{this.state.currentState}</Popover.Title>
               <Popover.Content>
-                Total Cases: {this.state.currentcases}
+                Total Cases: &nbsp;{this.state.currentcases}
               </Popover.Content>
             </Popover>
           </Overlay>
@@ -116,41 +132,60 @@ class USAmapData extends React.Component {
     }
     return (
       <div>
+        <h2 className='AlignTextCenter' style={{ marginTop: '5px' }}>
+          USA
+        </h2>
+        <p className='AlignTextLeft'>Click on a state to see total cases</p>
+        <p className='AlignTextLeftwithoutBold'>Data as of :&nbsp;{this.state.dateofdata}</p>
         {showPopup}
-        <div>
-          <Card style={{ width: '10rem',backgroundColor:'#D3D3D3' }}>
-            <Card.Body>
-              <h5 className='AlignTextLeft'>Range</h5>
-              <Row>
-                <p style={{ color: '#28a745' }} className='AlignTextLeft'>
-                  0-500
-                </p>
-              </Row>
-              <Row>
-                <p style={{ color: '#007bff' }} className='AlignTextLeft'>
-                  500-5000
-                </p>
-              </Row>
-              <Row>
-                <p style={{ color: '#ffc107' }} className='AlignTextLeft'>
-                  5000-20000
-                </p>
-              </Row>
-              <Row>
-                <p style={{ color: '#dc3545' }} className='AlignTextLeft'>
-                  >20000
-                </p>
-              </Row>
-            </Card.Body>
-          </Card>
-        </div>
-        <USAMap
-          customize={this.statesCustomConfig()}
-          onClick={this.mapHandler}
-        />
+        <Col>
+          <Row>
+            <Card
+              style={{
+                width: '10rem',
+                backgroundColor: '#D3D3D3',
+                marginLeft: '20px',
+                height: '12rem'
+              }}
+            >
+              <Card.Body>
+                <Row>
+                  <span
+                    className='dot'
+                    style={{ backgroundColor: '#28a745' }}
+                  ></span>
+                  <p className='AlignTextLeft'>0-500</p>
+                </Row>
+                <Row>
+                  <span
+                    className='dot'
+                    style={{ backgroundColor: '#007bff' }}
+                  ></span>
+                  <p className='AlignTextLeft'>500-5000</p>
+                </Row>
+                <Row>
+                  <span
+                    className='dot'
+                    style={{ backgroundColor: '#ffc107' }}
+                  ></span>
+                  <p className='AlignTextLeft'>5000-20000</p>
+                </Row>
+                <Row>
+                  <span
+                    className='dot'
+                    style={{ backgroundColor: '#dc3545' }}
+                  ></span>
+                  <p className='AlignTextLeft'>>20000</p>
+                </Row>
+              </Card.Body>
+            </Card>
+            <USAMap
+              customize={this.statesCustomConfig()}
+              onClick={this.mapHandler}
+            />
+          </Row>
+        </Col>
       </div>
     )
   }
 }
-
-export default USAmapData

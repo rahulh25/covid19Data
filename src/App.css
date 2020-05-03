@@ -37,13 +37,28 @@
   }
 }
 
-.nav-item {
+.nav-item >a {
   display: inline;
   margin-left: 2rem;
   color:white;
+  text-decoration: none;
 }
-.nav-item:hover {
+.nav-item >a:hover {
   cursor: pointer;
+  text-decoration: none;
+}
+.dropdown-item >a {
+  display: inline;
+  color:black;
+  color: inherit;
+  text-decoration: none;
+}
+.dropdown-item >a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+.table{
+  width:auto
 }
 .table:hover{
   cursor: pointer;
