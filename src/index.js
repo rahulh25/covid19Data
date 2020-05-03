@@ -13,6 +13,7 @@ import AreaChartData from '../src/components/home/graphs/areaChart'
 import BarChartData from '../src/components/home/graphs/barChart'
 import ChartData from '../src/components/home/graphs/linechart'
 import CountryData from '../src/components/home/countryData'
+import IndiaChartData from '../src/components/home/graphs/indiacharts/indiaCharts'
 const routing = (
   <Router>
     <Navbar bg='dark' expand='lg' variant='dark' sticky='top'>
@@ -34,7 +35,9 @@ const routing = (
               <Link to='/top15countriescasestests'>Total tests</Link>
             </li>
             <li className='dropdown-item'>
-              <Link to='/top15countriescases'>Total Cases/Deaths/Recoveries</Link>
+              <Link to='/top15countriescases'>
+                Total Cases/Deaths/Recoveries
+              </Link>
             </li>
           </NavDropdown>
           <NavDropdown title='USA' id='basic-nav-dropdown'>
@@ -49,6 +52,9 @@ const routing = (
             <li className='dropdown-item'>
               <Link to='/indiamap'>Map</Link>
             </li>
+            <li className='dropdown-item'>
+              <Link to='/indiagraphs'>Graphs</Link>
+            </li>
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
@@ -61,6 +67,7 @@ const routing = (
     <Route path='/top15countriescases' component={ChartData} />
     <Route path='/top15countriescasestests' component={BarChartData} />
     <Route path='/countrywisedata' component={CountryData} />
+    <Route path='/indiagraphs' component={IndiaChartData} />
   </Router>
 )
 

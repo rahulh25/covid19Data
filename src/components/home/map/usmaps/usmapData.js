@@ -40,9 +40,7 @@ export default class USAmapData extends React.Component {
         '/' +
         today.getDate() +
         '/' +
-        today
-          .getFullYear()
-          .toString()
+        today.getFullYear().toString()
     })
     d3.csv(
       'https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_confirmed_usafacts.csv'
@@ -136,7 +134,9 @@ export default class USAmapData extends React.Component {
           USA
         </h2>
         <p className='AlignTextLeft'>Click on a state to see total cases</p>
-        <p className='AlignTextLeftwithoutBold'>Data as of :&nbsp;{this.state.dateofdata}</p>
+        <p className='AlignTextLeftwithoutBold'>
+          Data as of :&nbsp;{this.state.dateofdata}
+        </p>
         {showPopup}
         <Col>
           <Row>
@@ -179,6 +179,7 @@ export default class USAmapData extends React.Component {
                 </Row>
               </Card.Body>
             </Card>
+
             <USAMap
               customize={this.statesCustomConfig()}
               onClick={this.mapHandler}
