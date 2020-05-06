@@ -30,18 +30,19 @@ class GlobalData extends React.Component {
       warningVariant: 'warning'
     }
   }
+  //https://coronavirus-19-api.herokuapp.com/countries
   componentDidMount () {
     axios
-      .get('https://coronavirus-19-api.herokuapp.com/countries')
+      .get('https://corona.lmao.ninja/v2/all')
       .then(response => {
         this.setState({
-          NewConfirmed: response.data[0]['todayCases'],
-          TotalConfirmed: response.data[0]['cases'],
-          NewDeaths: response.data[0]['todayDeaths'],
-          TotalDeaths: response.data[0]['deaths'],
-          TotalRecovered: response.data[0]['recovered'],
-          ActiveCases: response.data[0]['active'],
-          CriticalCases: response.data[0]['critical']
+          NewConfirmed: response.data['todayCases'],
+          TotalConfirmed: response.data['cases'],
+          NewDeaths: response.data['todayDeaths'],
+          TotalDeaths: response.data['deaths'],
+          TotalRecovered: response.data['recovered'],
+          ActiveCases: response.data['active'],
+          CriticalCases: response.data['critical']
         })
         axios.get('https://corona.lmao.ninja/v2/countries').then(response => {
           response.data.sort((r1, r2) => {

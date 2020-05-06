@@ -1,7 +1,8 @@
 import React from 'react'
 import USAMap from 'react-usa-map'
-import * as d3 from 'd3'
 import { Popover, Card, Overlay, Row, Col } from 'react-bootstrap'
+import axios from 'axios'
+import './style.css'
 export default class USAmapData extends React.Component {
   constructor () {
     super()
@@ -12,7 +13,11 @@ export default class USAmapData extends React.Component {
       currentState: '',
       setTarget: '',
       currentStateCode: '',
-      dateofdata: ''
+      recovered: '',
+      totaldeaths: '',
+      totaltest: '',
+      lastUpdated: '',
+      hopitalized: ''
     }
   }
   mapHandler = event => {
@@ -20,47 +25,8 @@ export default class USAmapData extends React.Component {
     return event
   }
   componentDidMount () {
-    var mapData = []
-    let today = new Date()
-    today.setDate(today.getDate() - 1)
-    let date =
-      today.getMonth() +
-      1 +
-      '/' +
-      today.getDate() +
-      '/' +
-      today
-        .getFullYear()
-        .toString()
-        .substr(-2)
-    this.setState({
-      dateofdata:
-        today.getMonth() +
-        1 +
-        '/' +
-        today.getDate() +
-        '/' +
-        today.getFullYear().toString()
-    })
-    d3.csv(
-      'https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_confirmed_usafacts.csv'
-    ).then(data => {
-      let finalData = d3
-        .nest()
-        .key(function (d) {
-          return d['State']
-        })
-        .rollup(function (d) {
-          return d3.sum(d, function (g) {
-            return g[date.toString()]
-          })
-        })
-        .entries(data)
-      finalData.forEach(data => {
-        mapData.push(data)
-        return data
-      })
-      this.setState({ finalMapData: mapData })
+    axios.get('https://covidtracking.com/api/states').then(response => {
+      this.setState({ finalMapData: response.data })
     })
   }
 
@@ -68,28 +34,46 @@ export default class USAmapData extends React.Component {
     let mySet = {}
     this.state.finalMapData.forEach(element => {
       var color = ''
-      if (parseInt(element['value']) < 500) {
-        color = '#28a745'
+      if (parseInt(element['positive']) <= 1000) {
+        color = '#F08080'
       } else if (
-        parseInt(element['value']) > 500 &&
-        parseInt(element['value']) < 5000
+        parseInt(element['positive']) > 1000 &&
+        parseInt(element['positive']) <= 5000
       ) {
-        color = '#007bff'
+        color = '#CD5C5C'
       } else if (
-        parseInt(element['value']) > 5000 &&
-        parseInt(element['value']) < 20000
+        parseInt(element['positive']) > 5000 &&
+        parseInt(element['positive']) <= 20000
       ) {
-        color = '#ffc107'
-      } else if (parseInt(element['value']) > 20000) {
-        color = '#dc3545'
+        color = '#B22222'
+      } else if (parseInt(element['positive']) > 20000) {
+        color = '#8B0000'
       }
-      mySet[element['key']] = {
+      mySet[element['state']] = {
         fill: color,
         clickHandler: event => {
           let result = 0
+          let recovered = 0
+          let totaldeaths = 0
+          let totaltest = 0
+          let lastUpdated = ''
+          let hospitalized = 0
           this.state.finalMapData.filter(entry => {
-            if (entry['key'].toString() === event.target.dataset.name) {
-              result = entry['value']
+            if (entry['state'].toString() === event.target.dataset.name) {
+              result = entry['positive']
+              if (entry['recovered'] === null) {
+                recovered = 'N/A'
+              } else {
+                recovered = entry['recovered']
+              }
+              if (entry['hospitalized'] === null) {
+                hospitalized = 'N/A'
+              } else {
+                hospitalized = entry['hospitalized']
+              }
+              totaldeaths = entry['death']
+              totaltest = entry['totalTestResults']
+              lastUpdated = entry['lastUpdateEt']
             }
             return entry
           })
@@ -98,7 +82,12 @@ export default class USAmapData extends React.Component {
             currentStateCode: event.target.dataset.name,
             setTarget: event.target,
             currentState: event.target.querySelector('title').innerHTML,
-            currentcases: result
+            currentcases: result,
+            recovered: recovered,
+            totaldeaths: totaldeaths,
+            totaltest: totaltest,
+            lastUpdated: lastUpdated,
+            hospitalized: hospitalized
           })
         }
       }
@@ -116,12 +105,31 @@ export default class USAmapData extends React.Component {
             show={this.state.showPopup}
             target={this.state.setTarget}
             placement='top'
-            containerPadding={20}
+            containerPadding={5}
           >
             <Popover id='popover-basic'>
-              <Popover.Title as='h3'>{this.state.currentState}</Popover.Title>
+              <h5 style={{textAlign:'center'}}>{this.state.currentState}</h5>
               <Popover.Content>
-                Total Cases: &nbsp;{this.state.currentcases}
+                <Row>
+                  <i>Total Cases:</i> &nbsp;
+                  <p className='text-info'>{this.state.currentcases}</p>
+                </Row>
+                <Row>
+                  <i>Total Deaths:</i>&nbsp;{' '}
+                  <p className='text-danger'>{this.state.totaldeaths}</p>
+                </Row>
+                <Row>
+                  <i>Total Recoveries:</i>&nbsp;{' '}
+                  <p className='text-success'>{this.state.recovered}</p>
+                </Row>
+                <Row>
+                  <i>Currently Hopitalized:</i>&nbsp;{' '}
+                  <p className='text-warning'>{this.state.hospitalized}</p>
+                </Row>
+                <Row>
+                  <i>Last Updated:</i> &nbsp;
+                  <p className='text-info'>{this.state.lastUpdated}</p>
+                </Row>
               </Popover.Content>
             </Popover>
           </Overlay>
@@ -129,14 +137,8 @@ export default class USAmapData extends React.Component {
       )
     }
     return (
-      <div>
-        <h2 className='AlignTextCenter' style={{ marginTop: '5px' }}>
-          USA
-        </h2>
+      <div style={{marginTop:'10%'}}>
         <p className='AlignTextLeft'>Click on a state to see total cases</p>
-        <p className='AlignTextLeftwithoutBold'>
-          Data as of :&nbsp;{this.state.dateofdata}
-        </p>
         {showPopup}
         <Col>
           <Row>
@@ -152,30 +154,30 @@ export default class USAmapData extends React.Component {
                 <Row>
                   <span
                     className='dot'
-                    style={{ backgroundColor: '#28a745' }}
+                    style={{ backgroundColor: '#F08080' }}
                   ></span>
-                  <p className='AlignTextLeft'>0-500</p>
+                  <p className='AlignTextLeft'>0-1000</p>
                 </Row>
                 <Row>
                   <span
                     className='dot'
-                    style={{ backgroundColor: '#007bff' }}
+                    style={{ backgroundColor: '#CD5C5C' }}
                   ></span>
-                  <p className='AlignTextLeft'>500-5000</p>
+                  <p className='AlignTextLeft'>1000-5000</p>
                 </Row>
                 <Row>
                   <span
                     className='dot'
-                    style={{ backgroundColor: '#ffc107' }}
+                    style={{ backgroundColor: '#B22222' }}
                   ></span>
                   <p className='AlignTextLeft'>5000-20000</p>
                 </Row>
                 <Row>
                   <span
                     className='dot'
-                    style={{ backgroundColor: '#dc3545' }}
+                    style={{ backgroundColor: '#8B0000' }}
                   ></span>
-                  <p className='AlignTextLeft'>>20000</p>
+                  <p className='AlignTextLeft'> >20000</p>
                 </Row>
               </Card.Body>
             </Card>

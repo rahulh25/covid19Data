@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import USAmapData from '../src/components/home/map/usmaps/usmapData'
-import USACountyData from '../src/components/home/map/usmaps/usaCountyWiseData'
 import IndiaHeatMap from './components/home/map/indiamaps/indiamap'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -44,9 +43,6 @@ const routing = (
             <li className='dropdown-item'>
               <Link to='/usamap'>Map</Link>
             </li>
-            <li className='dropdown-item'>
-              <Link to='/usacounty'>USA County</Link>
-            </li>
           </NavDropdown>
           <NavDropdown title='India' id='basic-nav-dropdown'>
             <li className='dropdown-item'>
@@ -61,7 +57,6 @@ const routing = (
     </Navbar>
     <Route exact path='/' component={App} />
     <Route path='/usamap' component={USAmapData} />
-    <Route path='/usacounty' component={USACountyData} />
     <Route path='/indiamap' component={IndiaHeatMap} />
     <Route path='/top15countriescasespermillion' component={AreaChartData} />
     <Route path='/top15countriescases' component={ChartData} />

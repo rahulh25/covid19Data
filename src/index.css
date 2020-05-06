@@ -51,6 +51,10 @@ code {
   height: 600px;
   width: 100%;
   margin: 0 auto;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  overflow-wrap: unset;
 }
 
 .leaflet-overlay-pane path, .leaflet-marker-icon {
