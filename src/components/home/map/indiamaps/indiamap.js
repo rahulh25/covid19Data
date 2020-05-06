@@ -2,7 +2,7 @@ import React from 'react'
 import INDIA from '@svg-maps/india'
 import { RadioSVGMap } from 'react-svg-map'
 import './index.css'
-import { Popover, Card, Overlay, Row, Col } from 'react-bootstrap'
+import { Popover, Overlay, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 
 class IndiaMap extends React.Component {
