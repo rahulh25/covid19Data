@@ -54,11 +54,9 @@ jobs:
                 echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                 docker push $IMAGE_NAME
   deploy-on-eks:
-        macos:
-          xcode: '9.0'
+        docker:
+          - image: 'cimg/base:stable'
         steps:
-          - checkout
-          - kube-orb/install
           - run:
               name: Install kubeconfig
               command: |
