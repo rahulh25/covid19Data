@@ -7,7 +7,6 @@ executors:
           - image: circleci/buildpack-deps:stretch
 orbs:
   node: circleci/node@1.1.6
-  kube-orb: circleci/kubernetes@1.0.0
 jobs:
   build-and-test:
     executor:
