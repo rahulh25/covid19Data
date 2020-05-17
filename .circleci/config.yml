@@ -65,8 +65,6 @@ jobs:
                 mkdir -p $HOME/.kube
                 echo -n "${<<parameters.kubeconfig>>}" | base64 --decode > $HOME/.kube/config
                 fi
-          - kube-orb/install-kubeconfig:
-              kubeconfig: KUBECONFIG_DATA
           - kube-orb/update-container-image:
               container-image-updates: 'rahulh25/covid19-dashboard:3.0=rahulh25/covid19-dashboard:4.0'
               get-rollout-status: true
