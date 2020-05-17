@@ -61,6 +61,7 @@ class GlobalData extends React.Component {
       <div style={{ marginTop: '5px' }}>
         <Container fluid='lg' id='globalData'>
           <Card>
+            <h2>This is also edited</h2>
             <h2 className='AlignTextCenter cardbackgroundcolor'>GLOBAL DATA</h2>
             <Card.Body className='backgroundcolorforpage'>
               <Row>
