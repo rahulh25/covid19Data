@@ -80,11 +80,18 @@ workflows:
               filters:
                 branches:
                   only: master
+          - update-deployment:
+              executor: aws-eks/python3
+              steps:
+                - checkout
+                - kubernetes/create-or-update-resource:
+                    get-rollout-status: true
+                    resource-name: deployment/covid19dashboard
           - aws-eks/update-container-image:
                 cluster-name: covidcluster
                 container-image-updates: 'rahulh25/covid19-dashboard:3.0=rahulh25/covid19-dashboard:4.0'
                 record: true
                 requires:
                   - build
-                  - create-deployment
+                  - update-deployment
                 resource-name: deployment/covid19dashboard
