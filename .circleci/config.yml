@@ -67,8 +67,9 @@ workflows:
                   only: master
           - aws-eks/update-container-image:
                 cluster-name: covidcluster
-                container-image-updates: 'rahulh25/covid19-dashboard:3.0=rahulh25/covid19-dashboard:4.0'
+                container-image-updates: 'deployment/covid19dashboard=rahulh25/covid19-dashboard:4.0'
                 record: true
+                dry-run: 'none.deployment.extensions/covid19dashboard image updated'
                 requires:
                   - build
                 resource-name: deployment/covid19dashboard
