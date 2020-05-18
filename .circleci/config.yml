@@ -5,14 +5,8 @@ executors:
           IMAGE_NAME: rahulh25/covid19-dashboard:4.0
         docker:
           - image: circleci/buildpack-deps:stretch
-parameters:
-      kubeconfig:
-        default: KUBECONFIG_DATA
-        description: Environment variable name containing base64-encoded kubeconfig data
-        type: env_var_name
 orbs:
   node: circleci/node@1.1.6
-  kube-orb: circleci/kubernetes@0.11.0
 jobs:
   build-and-test:
     executor:
@@ -53,23 +47,6 @@ jobs:
               command: |
                 echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                 docker push $IMAGE_NAME
-  deploy-on-eks:
-        docker:
-          - image: 'cimg/base:stable'
-        steps:
-          - checkout
-          - run:
-              name: Install kubeconfig
-              command: |
-                if [ -n "${<<parameters.kubeconfig>>}" ]; then
-                mkdir -p $HOME/.kube
-                echo -n "${<<parameters.kubeconfig>>}" | base64 --decode > $HOME/.kube/config
-                fi
-          - kube-orb/update-container-image:
-              container-image-updates: 'rahulh25/covid19-dashboard:3.0=rahulh25/covid19-dashboard:4.0'
-              get-rollout-status: true
-              record: true
-              resource-name: deployment/covid19dashboard
 workflows:
     build-and-test:
       jobs:
@@ -86,6 +63,3 @@ workflows:
               filters:
                 branches:
                   only: master
-          - deploy-on-eks:
-              requires:
-                - build
