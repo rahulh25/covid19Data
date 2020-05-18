@@ -67,8 +67,8 @@ workflows:
                   only: master
           - aws-eks/update-container-image:
                 cluster-name: covidcluster
-                container-image-updates: 'covid19dashboardreact=rahulh25/covid19-dashboard:4.0'
+                container-image-updates: 'covid19dashboardreact=rahulh25/covid19-dashboard:3.0'
                 record: true
                 requires:
-                  - build
+                  - publish-latest
                 resource-name: deployment/covid19dashboard
