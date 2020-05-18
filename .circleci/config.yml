@@ -69,7 +69,6 @@ workflows:
                 cluster-name: covidcluster
                 container-image-updates: 'deployment/covid19dashboard=rahulh25/covid19-dashboard:4.0'
                 record: true
-                dry-run: 'none.deployment.extensions/covid19dashboard image updated'
                 requires:
                   - build
                 resource-name: deployment/covid19dashboard
