@@ -58,7 +58,7 @@ jobs:
               install-kubectl: true
           - kubernetes/create-or-update-resource:
               get-rollout-status: true
-              resource-name: deployment/ncovid19dashboard
+              resource-name: deployment/covid19dashboard
 workflows:
     build-and-test:
       jobs:
@@ -81,3 +81,6 @@ workflows:
               cluster-name: covidcluster
               container-image-updates: 'rahulh25/covid19-dashboard:3.0=rahulh25/covid19-dashboard:4.0'
               record: true
+              resource-name: deployment/covid19dashboard
+              requires:
+                - build
