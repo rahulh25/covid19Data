@@ -49,21 +49,6 @@ jobs:
               command: |
                 echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                 docker push $IMAGE_NAME
-  create-deployment:
-        executor: aws-eks/python3  
-        parameters:
-          cluster-name:
-            description: |
-              Name of the EKS cluster
-            type: string   
-        steps:
-          - checkout
-          - aws-eks/update-kubeconfig-with-authenticator:
-              cluster-name: << parameters.cluster-name >>
-              install-kubectl: true
-          - kubernetes/create-or-update-resource:
-              get-rollout-status: true
-              resource-name: deployment/covid19dashboard
 workflows:
     build-and-test:
       jobs:
@@ -80,18 +65,10 @@ workflows:
               filters:
                 branches:
                   only: master
-          - update-deployment:
-              executor: aws-eks/python3
-              steps:
-                - checkout
-                - kubernetes/create-or-update-resource:
-                    get-rollout-status: true
-                    resource-name: deployment/covid19dashboard
           - aws-eks/update-container-image:
                 cluster-name: covidcluster
                 container-image-updates: 'rahulh25/covid19-dashboard:3.0=rahulh25/covid19-dashboard:4.0'
                 record: true
                 requires:
                   - build
-                  - update-deployment
                 resource-name: deployment/covid19dashboard
