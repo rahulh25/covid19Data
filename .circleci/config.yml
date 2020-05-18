@@ -7,6 +7,8 @@ executors:
           - image: circleci/buildpack-deps:stretch
 orbs:
   node: circleci/node@1.1.6
+  aws-eks: circleci/aws-eks@0.2.7
+  kubernetes: circleci/kubernetes@0.11.0
 jobs:
   build-and-test:
     executor:
@@ -47,6 +49,21 @@ jobs:
               command: |
                 echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
                 docker push $IMAGE_NAME
+  test-cluster:
+        executor: aws-eks/python3     
+        steps:
+          - update-kubeconfig-with-authenticator:
+              aws-profile: rahulh25
+              aws-region: us-east-2
+              cluster-name: covidcluster
+              install-kubectl: true
+          - kubernetes/update-container-image:
+              container-image-updates: "rahulh25/covid19-dashboard:3.0=rahulh25/covid19-dashboard:4.0"
+              get-rollout-status: false
+              record: true
+              resource-name: deployment/covid19dashboard
+              show-kubectl-command: false
+              watch-rollout-status: true
 workflows:
     build-and-test:
       jobs:
@@ -63,3 +80,8 @@ workflows:
               filters:
                 branches:
                   only: master
+    change-image-in-eks:
+        jobs:
+          - test-cluster:
+              requires:
+                - build
