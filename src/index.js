@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import USAmapData from '../src/components/home/map/usmaps/usmapData'
-import IndiaHeatMap from './components/home/map/indiamaps/indiamap'
+//import IndiaHeatMap from './components/home/map/indiamaps/indiamap'
 import * as serviceWorker from './serviceWorker'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
@@ -13,6 +13,7 @@ import BarChartData from '../src/components/home/graphs/barChart'
 import ChartData from '../src/components/home/graphs/linechart'
 import CountryData from '../src/components/home/countryData'
 import IndiaChartData from '../src/components/home/graphs/indiacharts/indiaCharts'
+import IndiaHeatMap from '../src/components/home/map/indiamaps/indiaHeatMap'
 const routing = (
   <Router>
     <Navbar bg='dark' expand='lg' variant='dark' sticky='top'>

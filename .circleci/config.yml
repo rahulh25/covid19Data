@@ -2,13 +2,12 @@ version: 2.1
 executors:
       docker-publisher:
         environment:
-          IMAGE_NAME: rahulh25/covid19-dashboard:4.0
+          IMAGE_NAME: rahulh25/covid19-dashboard:5.0
         docker:
           - image: circleci/buildpack-deps:stretch
 orbs:
   node: circleci/node@1.1.6
   aws-eks: circleci/aws-eks@0.2.7
-  kubernetes: circleci/kubernetes@0.11.0
 jobs:
   build-and-test:
     executor:
@@ -65,10 +64,3 @@ workflows:
               filters:
                 branches:
                   only: master
-          - aws-eks/update-container-image:
-                cluster-name: covidcluster
-                container-image-updates: 'covid19dashboardreact=rahulh25/covid19-dashboard:3.0'
-                record: true
-                requires:
-                  - publish-latest
-                resource-name: deployment/covid19dashboard

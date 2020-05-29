@@ -16,23 +16,27 @@ import axios from 'axios'
 class IndiaChartData extends React.Component {
   constructor () {
     super()
-    this.state = { graphData: [], dateofdata: '' }
+    this.state = {
+      graphData: [],
+      totalactivecases: [],
+      totalDeaths: [],
+      totalRecovered: []
+    }
   }
   componentDidMount () {
     axios.get('https://api.covid19india.org/data.json').then(response => {
       this.setState({
-        graphData: response.data['cases_time_series']
+        graphData: response.data['cases_time_series'],
+        totalactivecases: [
+          0,
+          parseInt(response.data['statewise'][0]['confirmed'])
+        ],
+        totalDeaths: [0, parseInt(response.data['statewise'][0]['deaths'])],
+        totalRecovered: [
+          0,
+          parseInt(response.data['statewise'][0]['recovered'])
+        ]
       })
-    })
-    let today = new Date()
-    this.setState({
-      dateofdata:
-        today.getMonth() +
-        1 +
-        '/' +
-        today.getDate() +
-        '/' +
-        today.getFullYear().toString()
     })
   }
   render () {
@@ -44,8 +48,8 @@ class IndiaChartData extends React.Component {
         <Col>
           <Row>
             <LineChart
-              width={430}
-              height={300}
+              width={650}
+              height={400}
               data={this.state.graphData}
               margin={{ top: 0, right: 0, bottom: 0, left: 10 }}
             >
@@ -53,13 +57,13 @@ class IndiaChartData extends React.Component {
               <Line type='monotone' dataKey='totalconfirmed' stroke='#8884d8' />
               <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
               <XAxis dataKey='date' />
-              <YAxis type='number' domain={[0, 50000]} />
+              <YAxis type='number' domain={this.state.totalactivecases} />
               <Tooltip />
               <Legend />
             </LineChart>
             <LineChart
-              width={430}
-              height={300}
+              width={650}
+              height={400}
               data={this.state.graphData}
               margin={{ top: 0, right: 0, bottom: 0, left: 10 }}
             >
@@ -67,21 +71,7 @@ class IndiaChartData extends React.Component {
               <Line type='monotone' dataKey='dailydeceased' stroke='red' />
               <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
               <XAxis dataKey='date' />
-              <YAxis type='number' domain={[0, 2000]} />
-              <Tooltip />
-              <Legend />
-            </LineChart>
-            <LineChart
-              width={430}
-              height={300}
-              data={this.state.graphData}
-              margin={{ top: 0, right: 0, bottom: 0, left: 10 }}
-            >
-              <Line type='monotone' dataKey='totalrecovered' stroke='#8884d8' />
-              <Line type='monotone' dataKey='dailyrecovered' stroke='green' />
-              <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
-              <XAxis dataKey='date' />
-              <YAxis type='number' domain={[0, 15000]} />
+              <YAxis type='number' domain={this.state.totalDeaths} />
               <Tooltip />
               <Legend />
             </LineChart>
@@ -89,9 +79,23 @@ class IndiaChartData extends React.Component {
         </Col>
         <Col>
           <Row>
+            <LineChart
+              width={650}
+              height={400}
+              data={this.state.graphData}
+              margin={{ top: 0, right: 0, bottom: 0, left: 10 }}
+            >
+              <Line type='monotone' dataKey='totalrecovered' stroke='#8884d8' />
+              <Line type='monotone' dataKey='dailyrecovered' stroke='green' />
+              <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
+              <XAxis dataKey='date' />
+              <YAxis type='number' domain={this.state.totalRecovered} />
+              <Tooltip />
+              <Legend />
+            </LineChart>
             <AreaChart
-              width={500}
-              height={300}
+              width={650}
+              height={400}
               data={this.state.graphData}
               margin={{
                 top: 20,
@@ -101,7 +105,7 @@ class IndiaChartData extends React.Component {
               }}
             >
               <XAxis dataKey='date' />
-              <YAxis domain={[0, 50000]} />
+              <YAxis domain={this.state.totalactivecases} />
               <Area dataKey='totalrecovered' stroke='green' fill='green' />
               <Area dataKey='totaldeceased' stroke='red' fill='red' />
               <Area dataKey='totalconfirmed' stroke='yellow' fill='yellow' />
