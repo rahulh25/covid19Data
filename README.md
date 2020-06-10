@@ -10,6 +10,8 @@
 4. Recharts
 5. Leaflet (To create the world map)
 
+<p> if you wish to see a demo of the application <a href="http://54.82.132.170:5000/"> click here</a> to see a demo </p><br>
+
 ## Steps to Run the code
 
 1. Clone or download the zip file of the project.
