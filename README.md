@@ -29,19 +29,19 @@
 ## Screenshots
 
 ### 1. Country Wise Data
-![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/c19/countrywisedata.png)<br>
+![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/covid19/countrywisedata.png)<br>
 
 ### 2. World Map
-![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/c19/worldmap.png)<br>
+![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/covid19/worldmap.png)<br>
 
 ### 3. Graph using Rechart
-![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/c19/graphs.png)<br>
+![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/covid19/graphs.png)<br>
 
 ### 4. USA Map
-![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/c19/usamap.png)<br>
+![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/covid19/usamap.png)<br>
 
 ### 5. INDIA Map
-![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/c19/indiamap.png)<br>
+![LOCALHOST SCREENSHOT](https://github.com/rahulh25/screenshots/blob/master/covid19/indiamap.png)<br>
 
 ## API's Used
 
