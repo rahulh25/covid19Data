@@ -51,3 +51,27 @@
 |2|https://corona.lmao.ninja/v2/countries| Gets the countrywise data|
 |3|https://api.covid19india.org/data.json| Data for India along with states |
 |4|https://covidtracking.com/api/states| Data for USA along with states|
+
+## References
+
+1. <a href="https://www.freecodecamp.org/news/how-to-create-a-coronavirus-covid-19-dashboard-map-app-in-react-with-gatsby-and-leaflet/"> Create Covid 19 World MAP </a><br>
+
+2. <a href="https://documenter.getpostman.com/view/8854915/SzS7R6uu?version=latest"> COVID 19 world data source </a><br>
+
+3. <a href="https://covidtracking.com/api"> USA state data </a><br>
+
+4. <a href="https://api.covid19india.org/"> India data source </a><br>
+
+## Creating docker image.
+
+1. Run the following command to build your docker image
+    ```js
+    docker build -f Dockerfile -t <username>/<imagename>:<version> .
+    ``` 
+2. You can also use my docker image for running it anywhere.
+    <i>rahulh25/covid19-dashboard:5.0</i>
+
+## Deploying docker image to AWS EC2
+
+<p>Refer the following link to get the files to deploy the dopcker image directly to AWS EC2 using Terraform</p><br>
+<a href="https://github.com/rahulh25/terraformforAWS">Click Here</a>
